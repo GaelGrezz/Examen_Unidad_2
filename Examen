@@ -1,0 +1,165 @@
+package com.example.intro92
+
+import android.R
+
+/**
+ * Project: intro92
+ * From: com.example.intro92
+ * Created by: Lenovo
+ * On: 23/06/2026
+ * All rights reserved: 2026
+ */
+
+// todo: Registrar participantes
+//Permite registrar un nuevo participante en el torneo.
+//No se deben permitir registros vacíos.
+//No se deben permitir participantes duplicados.
+
+// todo: Registrar puntos
+// Permite registrar puntos a un participante previamente registrado.
+// El participante debe existir.
+// Los puntos registrados deben ser mayores que cero.
+// Un participante puede recibir puntos en varias ocasiones durante el torneo.
+
+// todo: Consultar participante
+// Permite consultar la información de un participante.
+//La consulta deberá mostrar al menos:
+//Nombre del participante.
+//Total de puntos acumulados.
+//Categoría obtenida.
+
+// todo: MMostrar estadísticas del torneo
+// Debe mostrar como mínimo:
+// Cantidad total de participantes.
+// Total de puntos acumulados en el torneo.
+// Promedio de puntos por participante.
+// Participante con mayor cantidad de puntos.
+// Participante con menor cantidad de puntos.
+// Mostrar cuántos participantes hay por categoría
+
+// todo: Permitir el cierre del programa
+
+val participantes = mutableListOf<String>()
+val puntos: MutableList<MutableList<Double>> = mutableListOf()
+var puntosTotalesTorneo = 0.0
+var cantidadPuntos = 0
+fun main (){
+    while(true) {
+        println("""
+            Indique la operación que desee realizar:
+            1. Registrar participante.
+            2. Registrar puntos.
+            3. Consultar participante.
+            4. Mostrar estadísticas del torneo.
+            5. Cerrar programa.
+            """.trimIndent())
+        print(">>")
+        val opcionMenu = readln()
+        when(opcionMenu){
+            "1" -> {
+                println("Registrar participantes.")
+                println("Ingrese el nombre del participante:")
+                print(">>")
+                val nombre = readln()
+
+                if(nombre.isEmpty()){
+                println("No se aceptan nombres vacíos.")
+                continue
+                }
+
+                if(comprobarExistenciaParticipante(nombre)){
+                    println("El participante existe.")
+                    continue
+                }
+                participantes.add(nombre)
+                puntos.add(mutableListOf())
+            }
+
+            "2" -> {
+                println("Registrar puntaje.")
+                mostrarParticipantes()
+                    println("Ingrese el nombre del participante:")
+                    print(">>")
+                    val nombre = readln()
+
+                    if (!comprobarExistenciaParticipante(nombre)) {
+                        println("El participante no existe")
+                        continue
+                    }
+                do {
+                    println("Ingrese el puntaje deseado (ingrese 'x' para salir del sistema).")
+                    print(">>")
+                    val punto = readln()
+
+                    if(punto.lowercase() == "x"){
+                        break
+                    }
+
+                    if(punto.isEmpty()){
+                        println("Ha salido del sistema.")
+                        break
+                    }
+                    if(punto.toDouble() <= 0){
+                        println("Puntaje no permitido.")
+                        continue
+                    }
+
+                    val indiceParticipante = participantes.indexOf(nombre)
+                    puntos[indiceParticipante].add(punto.toDouble())
+                    puntosTotalesTorneo += punto.toDouble()
+                    cantidadPuntos++
+                } while(true)
+            }
+
+            "3" -> {
+                println("Consultar participante.")
+                println("Ingrese el nombre del participante:")
+                print(">>")
+                val nombre = readln()
+
+                if (!comprobarExistenciaParticipante(nombre)) {
+                    println("El participante no existe")
+                    continue
+                }
+
+                val indiceParticipante = participantes.indexOf(nombre)
+                val puntajeParticipante = puntos[indiceParticipante]
+                val totalPuntaje = puntajeParticipante.sum()
+
+                println("""
+                    Datos de participante
+                    Nombre: $nombre
+                    Total de puntos = $totalPuntaje
+                    """.trimIndent())
+
+            }
+
+            "4" -> {
+                println("""
+                    Mostrar estadísticas generales.
+                    Total de participantes: ${participantes.size}
+                    Total de puntos acumulados en el torneo: $puntosTotalesTorneo
+                    Puntos por participante: ${calcularPromedio(puntosTotalesTorneo, cantidadPuntos)
+                }
+                """.trimIndent())
+            }
+
+            "5" ->{
+                println("Ha decidido salir del programa.")
+                return
+            }
+        }
+    }
+}
+
+fun comprobarExistenciaParticipante(nombre: String): Boolean {
+    return participantes.contains(nombre)
+}
+
+fun calcularPromedio(total: Double, cantidad: Int): Double {
+    return total/cantidad
+}
+
+fun mostrarParticipantes(){
+    participantes.forEach { println(it) }
+}
