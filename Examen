@@ -107,6 +107,11 @@ fun main (){
             }
 
             "4" -> {
+                if (participantes.isEmpty()){
+                println("No hay participantes disponibles.")
+                    continue
+                }
+
                 println("""
                     Mostrar estadísticas generales.
                     Total de participantes: ${participantes.size}
@@ -134,8 +139,4 @@ fun calcularPromedio(total: Double, cantidad: Int): Double {
 
 fun mostrarParticipantes(){
     participantes.forEach { println(it) }
-}
-
-fun ingresarNombre(){
-
 }
