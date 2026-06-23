@@ -10,34 +10,6 @@ import android.R
  * All rights reserved: 2026
  */
 
-// todo: Registrar participantes
-//Permite registrar un nuevo participante en el torneo.
-//No se deben permitir registros vacíos.
-//No se deben permitir participantes duplicados.
-
-// todo: Registrar puntos
-// Permite registrar puntos a un participante previamente registrado.
-// El participante debe existir.
-// Los puntos registrados deben ser mayores que cero.
-// Un participante puede recibir puntos en varias ocasiones durante el torneo.
-
-// todo: Consultar participante
-// Permite consultar la información de un participante.
-//La consulta deberá mostrar al menos:
-//Nombre del participante.
-//Total de puntos acumulados.
-//Categoría obtenida.
-
-// todo: MMostrar estadísticas del torneo
-// Debe mostrar como mínimo:
-// Cantidad total de participantes.
-// Total de puntos acumulados en el torneo.
-// Promedio de puntos por participante.
-// Participante con mayor cantidad de puntos.
-// Participante con menor cantidad de puntos.
-// Mostrar cuántos participantes hay por categoría
-
-// todo: Permitir el cierre del programa
 
 val participantes = mutableListOf<String>()
 val puntos: MutableList<MutableList<Double>> = mutableListOf()
@@ -162,4 +134,8 @@ fun calcularPromedio(total: Double, cantidad: Int): Double {
 
 fun mostrarParticipantes(){
     participantes.forEach { println(it) }
+}
+
+fun ingresarNombre(){
+
 }
